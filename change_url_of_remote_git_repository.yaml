@@ -3,6 +3,7 @@ name: Change URL of remote git repository
 command: "git remote set-url origin {{url}}"
 tags:
   - git
+  - remote
 description: Sets the URL for a remote git repository to a new URL
 arguments:
   - name: url

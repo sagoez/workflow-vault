@@ -9,8 +9,8 @@ arguments:
     default_value: "8080"
 tags:
   - bash
-  - kill
   - process
+  - networking
 source_url: ~
 author: ~
 author_url: ~

@@ -13,7 +13,9 @@ arguments:
     arg_type: Text
     description: Number of replicas
     default_value: "0"
-tags: []
+tags:
+  - kubernetes
+  - scaling
 source_url: ~
 author: ~
 author_url: ~

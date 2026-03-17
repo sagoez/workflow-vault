@@ -1,13 +1,18 @@
 ---
-name: Squash the last N commits together
-command: "git reset --soft HEAD~{{num_commits}} && git commit"
-description: Squashes the last n commits together. Requires rewriting a commit message for the new squashed changes.
+name: Squash commits up to a selected commit
+command: "git reset --soft {{commit}} && git commit"
+description: Shows recent commit history, lets you pick a commit, and squashes everything after it into a new commit.
 arguments:
-  - name: num_commits
-    arg_type: Text
-    description: The number of commits that should be squashed together
+  - name: commit
+    arg_type: Enum
+    enum_name: commits
+    enum_command: "git log --oneline -20"
+    description: Squash all commits after this one
     default_value: ~
-tags: []
+tags:
+  - git
+  - squash
+  - rewrite-history
 source_url: ~
 author: ~
 author_url: ~

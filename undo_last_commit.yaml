@@ -3,7 +3,8 @@ name: Undo the last Git commit
 command: git reset HEAD~
 description: ~
 arguments: []
-tags: []
+tags:
+  - git
 source_url: ~
 author: ~
 author_url: ~

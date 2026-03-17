@@ -8,6 +8,7 @@ command: |-
 tags:
   - git
   - github
+  - api
 # A description of the workflow.
 description: Uses the GitHub API to retrieve a list of repos (up to 100 per page) and clones them.
 # List of arguments within the command.

@@ -3,6 +3,7 @@ name: Forward one or more local ports of a service
 command: kubectl port-forward svc/{{service_name}} {{local_port}}:{{service_port}}
 tags:
   - kubernetes
+  - networking
 description: "Listen on port specified locally, forwarding to the targetPort of the service's port with the same value in a pod selected by the service."
 arguments:
   - name: service_name

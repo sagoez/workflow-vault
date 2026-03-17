@@ -13,8 +13,7 @@ arguments:
     default_value: "1"
 tags:
   - bash
-  - repeat
-  - loop
+  - automation
 source_url: ~
 author: ~
 author_url: ~

@@ -9,7 +9,9 @@ arguments:
     enum_command: "kubectl get namespaces | awk 'NR>1 {print $1}'"
     description: Namespace to apply scale to
     default_value: ~
-tags: []
+tags:
+  - kubernetes
+  - deployment
 source_url: ~
 author: ~
 author_url: ~

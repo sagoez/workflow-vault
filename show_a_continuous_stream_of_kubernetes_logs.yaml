@@ -3,6 +3,8 @@ name: Show a continuous stream of Kubernetes logs
 command: "kubectl logs -f {{pod_name}} -n {{namespace}}"
 tags:
   - kubernetes
+  - logging
+  - debugging
 description: "Continuously streams logs from a given Kubernetes pod by using the `-f` flag."
 arguments:
   - name: namespace

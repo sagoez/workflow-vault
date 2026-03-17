@@ -2,7 +2,8 @@
 name: Check if a file exists and is a regular file
 command: "[[ -f {{file}} ]]"
 tags:
-  - shell
+  - bash
+  - filesystem
 description: Returns an exit code of 0 if the file exists and is a regular file (i.e. is not a directory or a symbolic link).
 arguments:
   - name: file
