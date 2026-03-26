@@ -1,0 +1,25 @@
+{
+  "name": "workflow-vault",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node web/build.js",
+    "dev": "node web/serve.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sagoez/workflow-vault.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sagoez/workflow-vault/issues"
+  },
+  "homepage": "https://github.com/sagoez/workflow-vault#readme",
+  "dependencies": {
+    "js-yaml": "^4.1.1"
+  }
+}

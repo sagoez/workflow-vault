@@ -1,0 +1,778 @@
+const fs = require('fs');
+const path = require('path');
+const yaml = require('js-yaml');
+
+const rootDir = path.join(__dirname, '..');
+const outDir = path.join(__dirname, 'site');
+const yamlFiles = fs.readdirSync(rootDir).filter(f => f.endsWith('.yaml')).sort();
+
+const workflows = [];
+const categories = {};
+const allTags = new Set();
+
+for (const file of yamlFiles) {
+  const raw = fs.readFileSync(path.join(rootDir, file), 'utf8');
+  const data = yaml.load(raw);
+  const category = file.split('_')[0];
+
+  data._file = file;
+  data._category = category;
+  data.tags = data.tags || [];
+  data.arguments = data.arguments || [];
+  data.shells = data.shells || [];
+
+  workflows.push(data);
+  categories[category] = (categories[category] || 0) + 1;
+  data.tags.forEach(t => allTags.add(t));
+}
+
+const sortedCategories = Object.entries(categories).sort((a, b) => b[1] - a[1]);
+const sortedTags = [...allTags].sort();
+
+const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workflow Vault</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #232733;
+    --border: #2e3345;
+    --text: #e1e4ed;
+    --text-muted: #8b90a0;
+    --accent: #6c8aff;
+    --accent-dim: #6c8aff22;
+    --tag-bg: #2a2f40;
+    --tag-text: #a0b0d0;
+    --green: #4ade80;
+    --orange: #fb923c;
+    --radius: 8px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-header {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+
+  .sidebar-header h1 {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .sidebar-header .count {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .github-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 5px 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+
+  .github-badge:hover {
+    color: var(--text);
+    border-color: var(--text-muted);
+    background: var(--border);
+  }
+
+  .github-badge svg {
+    flex-shrink: 0;
+  }
+
+  .sidebar-section {
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+
+  .sidebar-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 20px;
+    font-size: 14px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .sidebar-item:hover {
+    background: var(--surface2);
+    color: var(--text);
+  }
+
+  .sidebar-item.active {
+    background: var(--accent-dim);
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+
+  .sidebar-item .badge {
+    font-size: 12px;
+    background: var(--surface2);
+    padding: 1px 8px;
+    border-radius: 10px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .sidebar-item.active .badge {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  /* Main content */
+  .main {
+    padding: 32px 40px;
+    max-width: 960px;
+  }
+
+  .search-bar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    padding-bottom: 20px;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 12px 16px 12px 44px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .search-input:focus {
+    border-color: var(--accent);
+  }
+
+  .search-wrapper {
+    position: relative;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 16px;
+    pointer-events: none;
+  }
+
+  .active-filters {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: var(--accent-dim);
+    color: var(--accent);
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .filter-pill:hover { opacity: 0.7; }
+  .filter-pill .x { font-weight: 700; }
+
+  .results-count {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  /* Workflow cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+
+  .card:hover {
+    border-color: var(--accent);
+  }
+
+  .card-header {
+    padding: 16px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .category-badge {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: var(--surface2);
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .card-body {
+    display: none;
+    padding: 0 20px 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .card.open .card-body {
+    display: block;
+    padding-top: 16px;
+  }
+
+  /* Interactive args form */
+  .args-form {
+    margin-bottom: 16px;
+  }
+
+  .args-form-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .arg-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .arg-label {
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 12px;
+    color: var(--orange);
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .arg-input {
+    width: 100%;
+    padding: 7px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--text);
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .arg-input:focus {
+    border-color: var(--accent);
+  }
+
+  .arg-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+
+  .arg-desc {
+    grid-column: 2;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: -4px;
+    margin-bottom: 4px;
+  }
+
+  .command-block {
+    position: relative;
+    margin-bottom: 14px;
+  }
+
+  .command-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .command-code {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    padding-right: 70px;
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    color: var(--green);
+  }
+
+  .command-code .placeholder {
+    color: var(--orange);
+    background: var(--orange);
+    background-color: rgba(251, 146, 60, 0.15);
+    border-radius: 3px;
+    padding: 1px 4px;
+  }
+
+  .command-code .filled {
+    color: var(--accent);
+    background-color: rgba(108, 138, 255, 0.15);
+    border-radius: 3px;
+    padding: 1px 4px;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 28px;
+    right: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .copy-btn:hover { color: var(--text); background: var(--border); }
+  .copy-btn.copied { color: var(--green); }
+
+  .tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .tag {
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 4px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .tag:hover {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  .shells-info {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 10px;
+  }
+
+  .shells-info span {
+    color: var(--text);
+  }
+
+  .author-info {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .author-info a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .author-info a:hover {
+    text-decoration: underline;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+  }
+
+  .empty-state h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .sidebar {
+      position: static;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+    .main {
+      padding: 20px 16px;
+    }
+    .arg-row {
+      grid-template-columns: 1fr;
+    }
+    .arg-label {
+      text-align: left;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>Workflow Vault</h1>
+      <div class="count">${workflows.length} workflows</div>
+      <a href="https://github.com/sagoez/workflow" target="_blank" class="github-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        CLI Tool
+      </a>
+    </div>
+    <div class="sidebar-section">Categories</div>
+    <div class="sidebar-item active" data-category="all">
+      <span>All</span>
+      <span class="badge">${workflows.length}</span>
+    </div>
+    ${sortedCategories.map(([cat, count]) => `<div class="sidebar-item" data-category="${cat}">
+      <span>${cat}</span>
+      <span class="badge">${count}</span>
+    </div>`).join('\n    ')}
+  </aside>
+  <main class="main">
+    <div class="search-bar">
+      <div class="search-wrapper">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="search-input" type="text" placeholder="Search workflows..." autofocus>
+      </div>
+      <div class="active-filters" id="activeFilters"></div>
+    </div>
+    <div class="results-count" id="resultsCount"></div>
+    <div id="workflowList"></div>
+  </main>
+</div>
+
+<script>
+const workflows = ${JSON.stringify(workflows, null, 2)};
+
+let state = {
+  search: '',
+  category: 'all',
+  tags: new Set(),
+};
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function highlightCommand(command, args, cardId) {
+  let html = escapeHtml(command);
+  // Replace {{arg}} placeholders with highlighted spans
+  for (const a of args) {
+    const placeholder = '{{' + a.name + '}}';
+    const escapedPlaceholder = escapeHtml(placeholder);
+    const inputEl = document.querySelector('#arg-' + cardId + '-' + a.name);
+    const val = inputEl ? inputEl.value : '';
+    if (val) {
+      html = html.split(escapedPlaceholder).join('<span class="filled">' + escapeHtml(val) + '</span>');
+    } else {
+      html = html.split(escapedPlaceholder).join('<span class="placeholder">' + escapedPlaceholder + '</span>');
+    }
+  }
+  return html;
+}
+
+function resolveCommand(command, args, cardId) {
+  let resolved = command;
+  for (const a of args) {
+    const placeholder = '{{' + a.name + '}}';
+    const inputEl = document.querySelector('#arg-' + cardId + '-' + a.name);
+    const val = inputEl ? inputEl.value : '';
+    resolved = resolved.split(placeholder).join(val || placeholder);
+  }
+  return resolved;
+}
+
+function getCardId(file) {
+  return file.replace(/[^a-zA-Z0-9]/g, '_');
+}
+
+function renderCard(w) {
+  const cardId = getCardId(w._file);
+
+  const argsFormHtml = w.arguments.length ? \`
+    <div class="args-form">
+      <div class="args-form-label">Arguments</div>
+      \${w.arguments.map(a => \`
+        <div class="arg-row">
+          <label class="arg-label" for="arg-\${cardId}-\${a.name}">\${escapeHtml(a.name)}</label>
+          <input class="arg-input"
+            id="arg-\${cardId}-\${a.name}"
+            data-card="\${cardId}"
+            type="text"
+            placeholder="\${a.default_value ? escapeHtml(String(a.default_value)) : 'required'}"
+            value="\${a.default_value ? escapeHtml(String(a.default_value)) : ''}"
+            oninput="updatePreview('\${cardId}')">
+        </div>
+        \${a.description ? '<div class="arg-desc">' + escapeHtml(a.description) + '</div>' : ''}
+      \`).join('')}
+    </div>\` : '';
+
+  const tagsHtml = w.tags.length ? \`
+    <div class="tags-row">
+      \${w.tags.map(t => \`<span class="tag" onclick="addTagFilter('\${escapeHtml(t)}')">\${escapeHtml(t)}</span>\`).join('')}
+    </div>\` : '';
+
+  const shellsHtml = w.shells && w.shells.length ? \`
+    <div class="shells-info">Shells: <span>\${w.shells.join(', ')}</span></div>\` : '';
+
+  const authorHtml = w.author ? \`
+    <div class="author-info">Author: \${w.author_url ? \`<a href="\${escapeHtml(w.author_url)}" target="_blank">\${escapeHtml(w.author)}</a>\` : escapeHtml(w.author)}</div>\` : '';
+
+  // Initial command with placeholders highlighted
+  let initialCmd = escapeHtml(w.command);
+  for (const a of w.arguments) {
+    const ph = escapeHtml('{{' + a.name + '}}');
+    const val = a.default_value ? escapeHtml(String(a.default_value)) : null;
+    if (val) {
+      initialCmd = initialCmd.split(ph).join('<span class="filled">' + val + '</span>');
+    } else {
+      initialCmd = initialCmd.split(ph).join('<span class="placeholder">{{' + escapeHtml(a.name) + '}}</span>');
+    }
+  }
+
+  return \`<div class="card" data-file="\${w._file}" data-card-id="\${cardId}">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div>
+        <div class="card-title">\${escapeHtml(w.name)}</div>
+        <div class="card-desc">\${escapeHtml(w.description || '')}</div>
+      </div>
+      <div class="card-meta">
+        <span class="category-badge">\${escapeHtml(w._category)}</span>
+      </div>
+    </div>
+    <div class="card-body">
+      \${argsFormHtml}
+      <div class="command-block">
+        <div class="command-label">Command</div>
+        <div class="command-code" id="cmd-\${cardId}">\${initialCmd}</div>
+        <button class="copy-btn" onclick="copyResolved('\${cardId}', event)">Copy</button>
+      </div>
+      \${tagsHtml}
+      \${shellsHtml}
+      \${authorHtml}
+    </div>
+  </div>\`;
+}
+
+// Lookup workflow by cardId
+function getWorkflow(cardId) {
+  return workflows.find(w => getCardId(w._file) === cardId);
+}
+
+function updatePreview(cardId) {
+  const w = getWorkflow(cardId);
+  if (!w) return;
+  const cmdEl = document.getElementById('cmd-' + cardId);
+  if (!cmdEl) return;
+  cmdEl.innerHTML = highlightCommand(w.command, w.arguments, cardId);
+}
+
+function copyResolved(cardId, event) {
+  event.stopPropagation();
+  const w = getWorkflow(cardId);
+  if (!w) return;
+  const resolved = resolveCommand(w.command, w.arguments, cardId);
+  const btn = event.currentTarget;
+  navigator.clipboard.writeText(resolved).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+  });
+}
+
+function filterWorkflows() {
+  const q = state.search.toLowerCase();
+  return workflows.filter(w => {
+    if (state.category !== 'all' && w._category !== state.category) return false;
+    if (state.tags.size > 0 && ![...state.tags].every(t => w.tags.includes(t))) return false;
+    if (q) {
+      const haystack = [w.name, w.description, w.command, ...w.tags, w._category].join(' ').toLowerCase();
+      return q.split(/\\s+/).every(word => haystack.includes(word));
+    }
+    return true;
+  });
+}
+
+function render() {
+  const results = filterWorkflows();
+  document.getElementById('resultsCount').textContent = \`\${results.length} workflow\${results.length !== 1 ? 's' : ''}\`;
+  document.getElementById('workflowList').innerHTML = results.length
+    ? results.map(renderCard).join('')
+    : '<div class="empty-state"><h2>No workflows found</h2><p>Try adjusting your search or filters.</p></div>';
+
+  const filtersEl = document.getElementById('activeFilters');
+  const pills = [];
+  if (state.category !== 'all') {
+    pills.push(\`<span class="filter-pill" onclick="clearCategory()">category: \${state.category} <span class="x">&times;</span></span>\`);
+  }
+  state.tags.forEach(t => {
+    pills.push(\`<span class="filter-pill" onclick="removeTagFilter('\${t}')">tag: \${t} <span class="x">&times;</span></span>\`);
+  });
+  filtersEl.innerHTML = pills.join('');
+
+  document.querySelectorAll('.sidebar-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.category === state.category);
+  });
+}
+
+function toggleCard(header) {
+  header.parentElement.classList.toggle('open');
+}
+
+function addTagFilter(tag) {
+  state.tags.add(tag);
+  render();
+}
+
+function removeTagFilter(tag) {
+  state.tags.delete(tag);
+  render();
+}
+
+function clearCategory() {
+  state.category = 'all';
+  render();
+}
+
+// Sidebar click handlers
+document.querySelectorAll('.sidebar-item').forEach(el => {
+  el.addEventListener('click', () => {
+    state.category = el.dataset.category;
+    render();
+  });
+});
+
+// Search input
+document.querySelector('.search-input').addEventListener('input', (e) => {
+  state.search = e.target.value;
+  render();
+});
+
+// Keyboard shortcut: / to focus search
+document.addEventListener('keydown', (e) => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+    e.preventDefault();
+    document.querySelector('.search-input').focus();
+  }
+  if (e.key === 'Escape') {
+    document.activeElement.blur();
+  }
+});
+
+render();
+</script>
+</body>
+</html>`;
+
+fs.mkdirSync(outDir, { recursive: true });
+fs.writeFileSync(path.join(outDir, 'index.html'), html);
+console.log(`Built site/index.html with ${workflows.length} workflows in ${sortedCategories.length} categories`);
