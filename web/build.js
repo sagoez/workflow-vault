@@ -29,7 +29,7 @@ for (const file of yamlFiles) {
 const sortedCategories = Object.entries(categories).sort((a, b) => b[1] - a[1]);
 const sortedTags = [...allTags].sort();
 
-const faviconSvg = encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1a1d27"/><rect x="1" y="1" width="30" height="30" rx="5" fill="none" stroke="#2e3345" stroke-width="1"/><text x="6" y="22" font-family="monospace" font-weight="700" font-size="16" fill="#6c8aff">&gt;_</text></svg>');
+const faviconSvg = encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64"><rect width="64" height="64" rx="14" fill="#000"/><text x="32" y="44" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-style="italic" font-size="32" fill="#fff">wf</text></svg>');
 
 const html = `<!DOCTYPE html>
 <html lang="en">
@@ -42,23 +42,84 @@ const html = `<!DOCTYPE html>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #0f1117;
-    --surface: #1a1d27;
-    --surface2: #232733;
-    --border: #2e3345;
-    --text: #e1e4ed;
-    --text-muted: #8b90a0;
-    --accent: #6c8aff;
-    --accent-dim: #6c8aff22;
-    --tag-bg: #2a2f40;
-    --tag-text: #a0b0d0;
-    --green: #4ade80;
-    --orange: #fb923c;
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --surface2: #f4f4f5;
+    --border: #e4e4e7;
+    --text: #09090b;
+    --text-muted: #71717a;
+    --accent: #09090b;
+    --accent-dim: #09090b08;
+    --tag-bg: #f4f4f5;
+    --tag-text: #52525b;
+    --green: #16a34a;
+    --orange: #ea580c;
     --radius: 8px;
+    --icon-fill: #000;
+    --icon-text: #fff;
+    --command-text: #16a34a;
   }
 
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0c0c0d;
+      --surface: #141416;
+      --surface2: #1c1c1f;
+      --border: #27272a;
+      --text: #fafafa;
+      --text-muted: #a1a1aa;
+      --accent: #fafafa;
+      --accent-dim: #fafafa11;
+      --tag-bg: #1c1c1f;
+      --tag-text: #a1a1aa;
+      --green: #4ade80;
+      --orange: #fb923c;
+      --icon-fill: #fff;
+      --icon-text: #000;
+      --command-text: #4ade80;
+    }
+  }
+
+  [data-theme="dark"] {
+    --bg: #0c0c0d;
+    --surface: #141416;
+    --surface2: #1c1c1f;
+    --border: #27272a;
+    --text: #fafafa;
+    --text-muted: #a1a1aa;
+    --accent: #fafafa;
+    --accent-dim: #fafafa11;
+    --tag-bg: #1c1c1f;
+    --tag-text: #a1a1aa;
+    --green: #4ade80;
+    --orange: #fb923c;
+    --icon-fill: #fff;
+    --icon-text: #000;
+    --command-text: #4ade80;
+  }
+
+  [data-theme="light"] {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --surface2: #f4f4f5;
+    --border: #e4e4e7;
+    --text: #09090b;
+    --text-muted: #71717a;
+    --accent: #09090b;
+    --accent-dim: #09090b08;
+    --tag-bg: #f4f4f5;
+    --tag-text: #52525b;
+    --green: #16a34a;
+    --orange: #ea580c;
+    --icon-fill: #000;
+    --icon-text: #fff;
+    --command-text: #16a34a;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
@@ -128,6 +189,26 @@ const html = `<!DOCTYPE html>
     flex-shrink: 0;
   }
 
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-left: 6px;
+  }
+
+  .theme-toggle:hover {
+    color: var(--text);
+    border-color: var(--text-muted);
+  }
+
   .sidebar-section {
     padding: 8px 12px;
     font-size: 11px;
@@ -156,8 +237,8 @@ const html = `<!DOCTYPE html>
 
   .sidebar-item.active {
     background: var(--accent-dim);
-    color: var(--accent);
-    border-left-color: var(--accent);
+    color: var(--text);
+    border-left-color: var(--text);
   }
 
   .sidebar-item .badge {
@@ -171,7 +252,7 @@ const html = `<!DOCTYPE html>
 
   .sidebar-item.active .badge {
     background: var(--accent-dim);
-    color: var(--accent);
+    color: var(--text);
   }
 
   /* Main content */
@@ -400,7 +481,7 @@ const html = `<!DOCTYPE html>
     overflow-x: auto;
     white-space: pre-wrap;
     word-break: break-all;
-    color: var(--green);
+    color: var(--command-text);
   }
 
   .command-code .placeholder {
@@ -578,12 +659,20 @@ const html = `<!DOCTYPE html>
 <div class="layout">
   <aside class="sidebar">
     <div class="sidebar-header">
-      <h1>Workflow Vault</h1>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="28" height="28"><rect width="64" height="64" rx="14" fill="var(--text)"/><text x="32" y="44" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-style="italic" font-size="32" fill="var(--bg)">wf</text></svg>
+        <h1>Workflow Vault</h1>
+      </div>
       <div class="count">${workflows.length} workflows</div>
-      <a href="https://github.com/sagoez/workflow" target="_blank" class="github-badge">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        CLI Tool
-      </a>
+      <div style="display:flex;align-items:center;gap:6px;margin-top:10px;">
+        <a href="https://github.com/sagoez/workflow" target="_blank" class="github-badge" style="margin-top:0;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          CLI Tool
+        </a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" id="themeToggle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="themeIcon"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </div>
     </div>
     <div class="sidebar-section">Categories</div>
     <div class="sidebar-item active" data-category="all">
@@ -827,6 +916,32 @@ document.addEventListener('keydown', (e) => {
     document.activeElement.blur();
   }
 });
+
+// Theme toggle
+function getPreferredTheme() {
+  const saved = localStorage.getItem('theme');
+  if (saved) return saved;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const icon = document.getElementById('themeIcon');
+  if (theme === 'dark') {
+    icon.innerHTML = '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>';
+  } else {
+    icon.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+  }
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || getPreferredTheme();
+  const next = current === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', next);
+  applyTheme(next);
+}
+
+applyTheme(getPreferredTheme());
 
 render();
 </script>
