@@ -29,12 +29,15 @@ for (const file of yamlFiles) {
 const sortedCategories = Object.entries(categories).sort((a, b) => b[1] - a[1]);
 const sortedTags = [...allTags].sort();
 
+const faviconSvg = encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1a1d27"/><rect x="1" y="1" width="30" height="30" rx="5" fill="none" stroke="#2e3345" stroke-width="1"/><text x="6" y="22" font-family="monospace" font-weight="700" font-size="16" fill="#6c8aff">&gt;_</text></svg>');
+
 const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Workflow Vault</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,${faviconSvg}">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -501,15 +504,72 @@ const html = `<!DOCTYPE html>
       height: auto;
       border-right: none;
       border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    .sidebar-header {
+      padding: 0 16px 14px;
+    }
+    .sidebar-header h1 {
+      font-size: 18px;
+    }
+    .sidebar-section {
+      display: none;
+    }
+    .sidebar-item {
+      display: inline-flex;
+      padding: 5px 12px;
+      font-size: 13px;
+      border-left: none;
+      border-radius: 6px;
+      margin: 2px 4px 2px 12px;
+    }
+    .sidebar-item .badge {
+      margin-left: 4px;
+      padding: 0 6px;
+      font-size: 11px;
+    }
+    .sidebar-item.active {
+      border-left-color: transparent;
     }
     .main {
-      padding: 20px 16px;
+      padding: 16px 12px;
+    }
+    .search-input {
+      font-size: 14px;
+      padding: 10px 14px 10px 40px;
+    }
+    .card-header {
+      padding: 12px 14px;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .card-body {
+      padding: 0 14px 14px;
+    }
+    .card.open .card-body {
+      padding-top: 14px;
+    }
+    .command-code {
+      font-size: 12px;
+      padding: 10px 12px;
+      padding-right: 60px;
     }
     .arg-row {
       grid-template-columns: 1fr;
+      gap: 4px;
     }
     .arg-label {
       text-align: left;
+      font-size: 11px;
+    }
+    .arg-input {
+      font-size: 12px;
+      padding: 6px 10px;
+    }
+    .github-badge {
+      margin-top: 8px;
+      font-size: 11px;
+      padding: 4px 10px;
     }
   }
 </style>
