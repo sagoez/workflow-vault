@@ -124,6 +124,11 @@ const html = `<!DOCTYPE html>
     color: var(--text);
     line-height: 1.6;
     min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .sidebar, .main, .search-input, .command-code, .arg-input {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   }
 
   .layout {
@@ -316,16 +321,34 @@ const html = `<!DOCTYPE html>
     border-radius: 20px;
     font-size: 13px;
     cursor: pointer;
-    transition: opacity 0.15s;
+    transition: all 0.2s ease;
+    animation: scaleIn 0.2s ease-out;
   }
 
-  .filter-pill:hover { opacity: 0.7; }
+  .filter-pill:hover { opacity: 0.7; transform: scale(0.97); }
   .filter-pill .x { font-weight: 700; }
 
   .results-count {
     font-size: 13px;
     color: var(--text-muted);
     margin-bottom: 16px;
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes checkmark {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
   }
 
   /* Workflow cards */
@@ -335,11 +358,14 @@ const html = `<!DOCTYPE html>
     border-radius: var(--radius);
     margin-bottom: 12px;
     overflow: hidden;
-    transition: border-color 0.15s;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    animation: fadeInUp 0.4s ease-out both;
   }
 
   .card:hover {
     border-color: var(--accent);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
   }
 
   .card-header {
@@ -349,6 +375,11 @@ const html = `<!DOCTYPE html>
     justify-content: space-between;
     align-items: flex-start;
     gap: 16px;
+    transition: background 0.2s ease;
+  }
+
+  .card-header:hover {
+    background: var(--accent-dim);
   }
 
   .card-title {
@@ -383,14 +414,20 @@ const html = `<!DOCTYPE html>
   }
 
   .card-body {
-    display: none;
-    padding: 0 20px 16px;
+    padding: 0 20px;
     border-top: 1px solid var(--border);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.25s ease,
+                padding 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .card.open .card-body {
-    display: block;
-    padding-top: 16px;
+    max-height: 800px;
+    opacity: 1;
+    padding: 16px 20px;
   }
 
   /* Interactive args form */
@@ -486,10 +523,10 @@ const html = `<!DOCTYPE html>
 
   .command-code .placeholder {
     color: var(--orange);
-    background: var(--orange);
     background-color: rgba(251, 146, 60, 0.15);
     border-radius: 3px;
     padding: 1px 4px;
+    transition: all 0.3s ease;
   }
 
   .command-code .filled {
@@ -497,6 +534,7 @@ const html = `<!DOCTYPE html>
     background-color: rgba(108, 138, 255, 0.15);
     border-radius: 3px;
     padding: 1px 4px;
+    animation: scaleIn 0.2s ease-out;
   }
 
   .copy-btn {
@@ -510,11 +548,12 @@ const html = `<!DOCTYPE html>
     padding: 4px 10px;
     border-radius: 4px;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s ease;
   }
 
-  .copy-btn:hover { color: var(--text); background: var(--border); }
-  .copy-btn.copied { color: var(--green); }
+  .copy-btn:hover { color: var(--text); background: var(--border); transform: scale(1.05); }
+  .copy-btn:active { transform: scale(0.95); }
+  .copy-btn.copied { color: var(--green); border-color: var(--green); background: rgba(74, 222, 128, 0.1); }
 
   .tags-row {
     display: flex;
@@ -530,12 +569,17 @@ const html = `<!DOCTYPE html>
     background: var(--tag-bg);
     color: var(--tag-text);
     cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s ease;
   }
 
   .tag:hover {
     background: var(--accent-dim);
     color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .tag:active {
+    transform: scale(0.95);
   }
 
   .shells-info {
@@ -788,7 +832,8 @@ function renderCard(w) {
     }
   }
 
-  return \`<div class="card" data-file="\${w._file}" data-card-id="\${cardId}">
+  const delay = (w._renderIndex || 0) * 0.03;
+  return \`<div class="card" data-file="\${w._file}" data-card-id="\${cardId}" style="animation-delay:\${delay}s">
     <div class="card-header" onclick="toggleCard(this)">
       <div>
         <div class="card-title">\${escapeHtml(w.name)}</div>
@@ -832,7 +877,7 @@ function copyResolved(cardId, event) {
   const resolved = resolveCommand(w.command, w.arguments, cardId);
   const btn = event.currentTarget;
   navigator.clipboard.writeText(resolved).then(() => {
-    btn.textContent = 'Copied!';
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation:checkmark 0.3s ease"><polyline points="20 6 9 17 4 12"/></svg> Copied';
     btn.classList.add('copied');
     setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
   });
@@ -854,6 +899,7 @@ function filterWorkflows() {
 function render() {
   const results = filterWorkflows();
   document.getElementById('resultsCount').textContent = \`\${results.length} workflow\${results.length !== 1 ? 's' : ''}\`;
+  results.forEach((w, i) => w._renderIndex = i);
   document.getElementById('workflowList').innerHTML = results.length
     ? results.map(renderCard).join('')
     : '<div class="empty-state"><h2>No workflows found</h2><p>Try adjusting your search or filters.</p></div>';
