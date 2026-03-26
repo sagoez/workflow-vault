@@ -1,0 +1,23 @@
+---
+name: Assume IAM Role
+command: "eval $(aws sts assume-role --role-arn {{role_arn}} --role-session-name {{session_name}} --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' --output text | awk '{printf \"export AWS_ACCESS_KEY_ID=%s\\nexport AWS_SECRET_ACCESS_KEY=%s\\nexport AWS_SESSION_TOKEN=%s\\n\", $1, $2, $3}')"
+description: Assume an IAM role and export temporary credentials as environment variables
+arguments:
+  - name: role_arn
+    arg_type: Text
+    description: The ARN of the IAM role to assume
+    default_value: ~
+  - name: session_name
+    arg_type: Text
+    description: The name for the role session
+    default_value: "my-session"
+tags:
+  - aws
+  - iam
+  - security
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

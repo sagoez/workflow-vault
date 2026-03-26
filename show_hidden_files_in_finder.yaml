@@ -1,0 +1,14 @@
+---
+name: Show Hidden Files in Finder
+command: "defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+description: Make hidden files and dotfiles visible in macOS Finder
+arguments: []
+tags:
+  - macos
+  - finder
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

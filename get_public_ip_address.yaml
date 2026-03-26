@@ -1,0 +1,12 @@
+---
+name: Get Public IP Address
+command: "curl -s ifconfig.me"
+description: Quickly get your public-facing IP address
+arguments: []
+tags:
+  - networking
+  - curl
+source_url: ~
+author: ~
+author_url: ~
+shells: []

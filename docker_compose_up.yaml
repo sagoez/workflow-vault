@@ -1,0 +1,16 @@
+---
+name: Docker Compose Up
+command: "docker compose up -d {{service}}"
+description: Start Docker Compose services in detached mode. Leave service empty to start all.
+arguments:
+  - name: service
+    arg_type: Text
+    description: Specific service to start (leave empty for all)
+    default_value: ""
+tags:
+  - docker
+  - docker-compose
+source_url: ~
+author: ~
+author_url: ~
+shells: []

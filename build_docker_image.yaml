@@ -1,0 +1,24 @@
+---
+name: Build a Docker Image
+command: "docker build -t {{image_name}}:{{tag}} {{dockerfile_path}}"
+description: Build a Docker image from a Dockerfile with a custom name and tag
+arguments:
+  - name: image_name
+    arg_type: Text
+    description: Name for the Docker image
+    default_value: ~
+  - name: tag
+    arg_type: Text
+    description: Tag for the image
+    default_value: latest
+  - name: dockerfile_path
+    arg_type: Text
+    description: Path to the build context (directory containing Dockerfile)
+    default_value: "."
+tags:
+  - docker
+  - build
+source_url: ~
+author: ~
+author_url: ~
+shells: []

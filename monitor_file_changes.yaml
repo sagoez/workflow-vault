@@ -1,0 +1,16 @@
+---
+name: Monitor File Changes in Real-Time
+command: "fswatch -r {{directory}}"
+description: Watch a directory for file changes in real-time using fswatch
+arguments:
+  - name: directory
+    arg_type: Text
+    description: Directory to monitor
+    default_value: "."
+tags:
+  - system
+  - filesystem
+source_url: ~
+author: ~
+author_url: ~
+shells: []

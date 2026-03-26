@@ -1,0 +1,19 @@
+---
+name: Show Top Processes by CPU Usage
+command: "ps aux --sort=-%cpu | head -{{num_results}}"
+description: List processes sorted by CPU consumption
+arguments:
+  - name: num_results
+    arg_type: Text
+    description: Number of top processes to show
+    default_value: "20"
+tags:
+  - system
+  - process
+  - cpu
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

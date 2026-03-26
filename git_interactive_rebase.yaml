@@ -1,0 +1,17 @@
+---
+name: Interactive Rebase Last N Commits
+command: "git rebase -i HEAD~{{num_commits}}"
+description: Interactively rebase the last N commits to reorder, squash, edit, or drop them
+arguments:
+  - name: num_commits
+    arg_type: Text
+    description: Number of commits to include in the rebase
+    default_value: ~
+tags:
+  - git
+  - rebase
+  - rewrite-history
+source_url: ~
+author: ~
+author_url: ~
+shells: []

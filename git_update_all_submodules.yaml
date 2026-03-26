@@ -1,0 +1,12 @@
+---
+name: Update All Git Submodules
+command: "git submodule update --init --recursive"
+description: Initialize and update all submodules recursively to their tracked commits
+arguments: []
+tags:
+  - git
+  - submodule
+source_url: ~
+author: ~
+author_url: ~
+shells: []

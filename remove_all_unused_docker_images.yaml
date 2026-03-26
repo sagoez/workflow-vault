@@ -1,0 +1,12 @@
+---
+name: Remove All Unused Docker Images
+command: "docker image prune -a -f"
+description: Remove all Docker images not associated with a running container
+arguments: []
+tags:
+  - docker
+  - cleanup
+source_url: ~
+author: ~
+author_url: ~
+shells: []

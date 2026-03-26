@@ -1,0 +1,20 @@
+---
+name: Git Bisect to Find a Bad Commit
+command: "git bisect start {{bad_commit}} {{good_commit}}"
+description: Start a binary search through commit history to find the commit that introduced a bug
+arguments:
+  - name: bad_commit
+    arg_type: Text
+    description: A commit hash where the bug exists (usually HEAD)
+    default_value: HEAD
+  - name: good_commit
+    arg_type: Text
+    description: A commit hash where the bug did not exist
+    default_value: ~
+tags:
+  - git
+  - debugging
+source_url: ~
+author: ~
+author_url: ~
+shells: []

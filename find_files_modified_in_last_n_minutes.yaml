@@ -1,0 +1,20 @@
+---
+name: Find Files Modified in the Last N Minutes
+command: "find {{directory}} -type f -mmin -{{minutes}} -ls"
+description: List all files modified within a given number of minutes
+arguments:
+  - name: directory
+    arg_type: Text
+    description: Directory to search in
+    default_value: "."
+  - name: minutes
+    arg_type: Text
+    description: Number of minutes to look back
+    default_value: "60"
+tags:
+  - file
+  - search
+source_url: ~
+author: ~
+author_url: ~
+shells: []

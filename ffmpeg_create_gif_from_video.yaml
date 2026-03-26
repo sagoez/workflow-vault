@@ -1,0 +1,29 @@
+---
+name: Create GIF from Video
+command: "ffmpeg -i {{input_file}} -vf \"fps={{fps}},scale={{width}}:-1:flags=lanczos\" -c:v gif {{output_file}}"
+description: Convert a video clip into an animated GIF with custom frame rate and width
+arguments:
+  - name: input_file
+    arg_type: Text
+    description: Input video file path
+    default_value: ~
+  - name: fps
+    arg_type: Text
+    description: Frames per second for the GIF
+    default_value: "10"
+  - name: width
+    arg_type: Text
+    description: Width in pixels (height auto-calculated)
+    default_value: "480"
+  - name: output_file
+    arg_type: Text
+    description: Output GIF file path
+    default_value: "output.gif"
+tags:
+  - ffmpeg
+  - video
+  - gif
+source_url: ~
+author: ~
+author_url: ~
+shells: []

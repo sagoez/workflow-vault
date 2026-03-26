@@ -1,0 +1,14 @@
+---
+name: Hide Hidden Files in Finder
+command: "defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+description: Restore default Finder behavior to hide dotfiles and hidden files
+arguments: []
+tags:
+  - macos
+  - finder
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

@@ -1,0 +1,17 @@
+---
+name: Open Application from Terminal
+command: "open -a \"{{app_name}}\""
+description: Launch a macOS application by name from the terminal
+arguments:
+  - name: app_name
+    arg_type: Text
+    description: Name of the application to open
+    default_value: ~
+tags:
+  - macos
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

@@ -1,0 +1,23 @@
+---
+name: View Docker Container Logs
+command: "docker logs -f --tail {{lines}} {{container_name}}"
+description: Stream logs from a Docker container with a tail limit
+arguments:
+  - name: container_name
+    arg_type: Enum
+    enum_name: running_containers
+    enum_command: "docker ps --format '{{.Names}}'"
+    description: Container to view logs from
+    default_value: ~
+  - name: lines
+    arg_type: Text
+    description: Number of recent lines to show before streaming
+    default_value: "100"
+tags:
+  - docker
+  - logging
+  - debugging
+source_url: ~
+author: ~
+author_url: ~
+shells: []

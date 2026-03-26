@@ -1,0 +1,16 @@
+---
+name: Cherry-pick a Git Commit
+command: "git cherry-pick {{commit_hash}}"
+description: Apply a specific commit from another branch onto the current branch
+arguments:
+  - name: commit_hash
+    arg_type: Text
+    description: The commit hash to cherry-pick
+    default_value: ~
+tags:
+  - git
+  - cherry-pick
+source_url: ~
+author: ~
+author_url: ~
+shells: []

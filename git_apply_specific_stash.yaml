@@ -1,0 +1,16 @@
+---
+name: Apply a Specific Git Stash
+command: "git stash apply {{stash_index}}"
+description: Apply a specific stash entry without removing it from the stash list
+arguments:
+  - name: stash_index
+    arg_type: Text
+    description: "Stash reference to apply (e.g. stash@{0})"
+    default_value: "stash@{0}"
+tags:
+  - git
+  - stash
+source_url: ~
+author: ~
+author_url: ~
+shells: []

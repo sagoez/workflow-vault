@@ -1,0 +1,22 @@
+---
+name: Show Disk Usage of Directories
+command: "du -sh {{directory}}/* | sort -rh | head -{{num_results}}"
+description: Show the largest directories and files sorted by size
+arguments:
+  - name: directory
+    arg_type: Text
+    description: Directory to analyze
+    default_value: "."
+  - name: num_results
+    arg_type: Text
+    description: Number of top results to show
+    default_value: "20"
+tags:
+  - disk
+  - filesystem
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

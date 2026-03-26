@@ -1,0 +1,16 @@
+---
+name: pnpm Why Package is Installed
+command: "pnpm why {{package_name}}"
+description: Show why a package is installed by displaying its dependency tree
+arguments:
+  - name: package_name
+    arg_type: Text
+    description: Name of the package to investigate
+    default_value: ~
+tags:
+  - pnpm
+  - node
+source_url: ~
+author: ~
+author_url: ~
+shells: []

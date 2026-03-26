@@ -1,0 +1,16 @@
+---
+name: Create and Switch to a New Branch
+command: "git checkout -b {{branch_name}}"
+description: Create a new branch and switch to it in one command
+arguments:
+  - name: branch_name
+    arg_type: Text
+    description: Name for the new branch
+    default_value: ~
+tags:
+  - git
+  - branch
+source_url: ~
+author: ~
+author_url: ~
+shells: []

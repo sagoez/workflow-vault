@@ -1,0 +1,23 @@
+---
+name: Tail ECS Service Logs
+command: "aws logs tail /ecs/{{service_name}} --follow --profile {{profile}}"
+description: Follow and tail CloudWatch logs for an ECS service
+arguments:
+  - name: service_name
+    arg_type: Text
+    description: The ECS service name
+    default_value: ~
+  - name: profile
+    arg_type: Text
+    description: The AWS CLI profile to use
+    default_value: "default"
+tags:
+  - aws
+  - ecs
+  - logging
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

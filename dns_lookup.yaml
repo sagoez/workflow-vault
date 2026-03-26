@@ -1,0 +1,22 @@
+---
+name: DNS Lookup
+command: "dig {{domain}} {{record_type}}"
+description: Query DNS records for a domain
+arguments:
+  - name: domain
+    arg_type: Text
+    description: Domain name to look up
+    default_value: ~
+  - name: record_type
+    arg_type: Enum
+    enum_name: record_types
+    enum_command: "echo 'A\nAAAA\nMX\nCNAME\nTXT\nNS\nSOA'"
+    description: Type of DNS record to query
+    default_value: A
+tags:
+  - networking
+  - dns
+source_url: ~
+author: ~
+author_url: ~
+shells: []

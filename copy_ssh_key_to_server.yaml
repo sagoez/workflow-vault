@@ -1,0 +1,24 @@
+---
+name: Copy SSH Key to a Server
+command: "ssh-copy-id -i ~/.ssh/{{key_name}}.pub {{user}}@{{host}}"
+description: Copy your public SSH key to a remote server for passwordless authentication
+arguments:
+  - name: key_name
+    arg_type: Text
+    description: Name of the SSH key file (without .pub extension)
+    default_value: id_ed25519
+  - name: user
+    arg_type: Text
+    description: SSH username on the remote server
+    default_value: ~
+  - name: host
+    arg_type: Text
+    description: Remote server address
+    default_value: ~
+tags:
+  - ssh
+  - security
+source_url: ~
+author: ~
+author_url: ~
+shells: []

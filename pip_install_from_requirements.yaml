@@ -1,0 +1,16 @@
+---
+name: Install Python Packages from Requirements
+command: "pip install -r {{requirements_file}}"
+description: Install all Python packages listed in a requirements file
+arguments:
+  - name: requirements_file
+    arg_type: Text
+    description: Path to the requirements file
+    default_value: "requirements.txt"
+tags:
+  - python
+  - pip
+source_url: ~
+author: ~
+author_url: ~
+shells: []

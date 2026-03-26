@@ -1,0 +1,25 @@
+---
+name: Compress Video with H.264
+command: "ffmpeg -i {{input_file}} -vcodec libx264 -crf {{quality}} {{output_file}}"
+description: "Compress a video using H.264. CRF 18-28 is reasonable (lower = better quality, larger file)"
+arguments:
+  - name: input_file
+    arg_type: Text
+    description: Input video file path
+    default_value: ~
+  - name: quality
+    arg_type: Text
+    description: "CRF quality value (18=high quality, 23=default, 28=smaller file)"
+    default_value: "23"
+  - name: output_file
+    arg_type: Text
+    description: Output compressed video file
+    default_value: ~
+tags:
+  - ffmpeg
+  - video
+  - compression
+source_url: ~
+author: ~
+author_url: ~
+shells: []

@@ -1,0 +1,16 @@
+---
+name: Trace Route to a Host
+command: "traceroute {{host}}"
+description: Show the network path packets take to reach a remote host
+arguments:
+  - name: host
+    arg_type: Text
+    description: Host or IP address to trace
+    default_value: ~
+tags:
+  - networking
+  - debugging
+source_url: ~
+author: ~
+author_url: ~
+shells: []

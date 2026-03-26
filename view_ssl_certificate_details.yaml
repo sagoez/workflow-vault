@@ -1,0 +1,16 @@
+---
+name: View SSL Certificate Details
+command: "echo | openssl s_client -servername {{domain}} -connect {{domain}}:443 2>/dev/null | openssl x509 -noout -text"
+description: Show full details of a remote SSL certificate including issuer, subject, and SANs
+arguments:
+  - name: domain
+    arg_type: Text
+    description: Domain name to inspect
+    default_value: ~
+tags:
+  - ssl
+  - security
+source_url: ~
+author: ~
+author_url: ~
+shells: []

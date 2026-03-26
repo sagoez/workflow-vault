@@ -1,0 +1,28 @@
+---
+name: Trim Video
+command: "ffmpeg -i {{input_file}} -ss {{start_time}} -to {{end_time}} -c copy {{output_file}}"
+description: Cut a segment from a video without re-encoding
+arguments:
+  - name: input_file
+    arg_type: Text
+    description: Input video file path
+    default_value: ~
+  - name: start_time
+    arg_type: Text
+    description: "Start time (HH:MM:SS format)"
+    default_value: "00:00:00"
+  - name: end_time
+    arg_type: Text
+    description: "End time (HH:MM:SS format)"
+    default_value: "00:01:00"
+  - name: output_file
+    arg_type: Text
+    description: Output trimmed video file
+    default_value: ~
+tags:
+  - ffmpeg
+  - video
+source_url: ~
+author: ~
+author_url: ~
+shells: []

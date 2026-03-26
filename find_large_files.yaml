@@ -1,0 +1,20 @@
+---
+name: Find Large Files
+command: "find {{directory}} -type f -size +{{size}} | xargs ls -lhS"
+description: Find files larger than a specified size, sorted by size
+arguments:
+  - name: directory
+    arg_type: Text
+    description: Directory to search in
+    default_value: "."
+  - name: size
+    arg_type: Text
+    description: "Minimum file size (e.g. 100M, 1G)"
+    default_value: "100M"
+tags:
+  - file
+  - disk
+source_url: ~
+author: ~
+author_url: ~
+shells: []

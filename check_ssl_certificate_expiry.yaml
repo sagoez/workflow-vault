@@ -1,0 +1,17 @@
+---
+name: Check SSL Certificate Expiry
+command: "echo | openssl s_client -servername {{domain}} -connect {{domain}}:443 2>/dev/null | openssl x509 -noout -dates"
+description: Check the start and expiration dates of a domain's SSL certificate
+arguments:
+  - name: domain
+    arg_type: Text
+    description: Domain name to check
+    default_value: ~
+tags:
+  - ssl
+  - security
+  - networking
+source_url: ~
+author: ~
+author_url: ~
+shells: []

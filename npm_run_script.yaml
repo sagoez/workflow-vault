@@ -1,0 +1,18 @@
+---
+name: Run an npm Script
+command: "npm run {{script_name}}"
+description: Run a script defined in package.json
+arguments:
+  - name: script_name
+    arg_type: Enum
+    enum_name: scripts
+    enum_command: "cat package.json | jq -r '.scripts | keys[]'"
+    description: Script name from package.json
+    default_value: ~
+tags:
+  - npm
+  - node
+source_url: ~
+author: ~
+author_url: ~
+shells: []

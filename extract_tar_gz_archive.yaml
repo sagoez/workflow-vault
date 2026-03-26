@@ -1,0 +1,20 @@
+---
+name: Extract a tar.gz Archive
+command: "tar -xzf {{archive_file}} -C {{destination}}"
+description: Extract a gzipped tar archive to a specified directory
+arguments:
+  - name: archive_file
+    arg_type: Text
+    description: Path to the .tar.gz file
+    default_value: ~
+  - name: destination
+    arg_type: Text
+    description: Directory to extract into
+    default_value: "."
+tags:
+  - archive
+  - compression
+source_url: ~
+author: ~
+author_url: ~
+shells: []

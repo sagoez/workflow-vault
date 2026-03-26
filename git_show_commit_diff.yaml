@@ -1,0 +1,16 @@
+---
+name: Show a Git Commit Diff
+command: "git show {{commit_hash}}"
+description: Display the diff and metadata for a specific commit
+arguments:
+  - name: commit_hash
+    arg_type: Text
+    description: The commit hash to inspect
+    default_value: HEAD
+tags:
+  - git
+  - diff
+source_url: ~
+author: ~
+author_url: ~
+shells: []

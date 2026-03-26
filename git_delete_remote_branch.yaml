@@ -1,0 +1,19 @@
+---
+name: Delete a Remote Git Branch
+command: "git push origin --delete {{branch_name}}"
+description: Delete a branch from the remote repository
+arguments:
+  - name: branch_name
+    arg_type: Enum
+    enum_name: remote_branches
+    enum_command: "git branch -r --format='%(refname:short)' | sed 's|origin/||'"
+    description: Remote branch to delete
+    default_value: ~
+tags:
+  - git
+  - branch
+  - remote
+source_url: ~
+author: ~
+author_url: ~
+shells: []

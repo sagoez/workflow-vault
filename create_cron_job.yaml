@@ -1,0 +1,23 @@
+---
+name: Create a Cron Job
+command: "(crontab -l 2>/dev/null; echo \"{{schedule}} {{command}}\") | crontab -"
+description: Add a cron job without overwriting existing ones
+arguments:
+  - name: schedule
+    arg_type: Text
+    description: "Cron schedule expression (e.g. '0 * * * *' for hourly)"
+    default_value: "0 * * * *"
+  - name: command
+    arg_type: Text
+    description: Command to run on schedule
+    default_value: ~
+tags:
+  - system
+  - cron
+  - automation
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

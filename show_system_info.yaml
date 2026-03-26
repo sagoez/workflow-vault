@@ -1,0 +1,14 @@
+---
+name: Show System Information
+command: "uname -a && sw_vers 2>/dev/null; echo '---'; sysctl -n hw.memsize 2>/dev/null | awk '{printf \"RAM: %.0f GB\\n\", $1/1073741824}'; sysctl -n hw.ncpu 2>/dev/null | awk '{printf \"CPUs: %s\\n\", $1}'"
+description: Show OS version, kernel info, RAM, and CPU count (macOS)
+arguments: []
+tags:
+  - system
+  - macos
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

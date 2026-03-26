@@ -1,0 +1,18 @@
+---
+name: List EC2 Instances
+command: "aws ec2 describe-instances --query \"Reservations[].Instances[].{ID:InstanceId,Type:InstanceType,State:State.Name,Name:Tags[?Key=='Name']|[0].Value}\" --output table --profile {{profile}}"
+description: List all EC2 instances with their ID, type, state, and name in a table
+arguments:
+  - name: profile
+    arg_type: Text
+    description: The AWS CLI profile to use
+    default_value: "default"
+tags:
+  - aws
+  - ec2
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

@@ -1,0 +1,20 @@
+---
+name: Check if a Port is Open
+command: "nc -zv {{host}} {{port}}"
+description: Test whether a specific port is open on a host using netcat
+arguments:
+  - name: host
+    arg_type: Text
+    description: Host address to check
+    default_value: localhost
+  - name: port
+    arg_type: Text
+    description: Port number to check
+    default_value: "80"
+tags:
+  - networking
+  - debugging
+source_url: ~
+author: ~
+author_url: ~
+shells: []

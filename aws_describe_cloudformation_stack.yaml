@@ -1,0 +1,22 @@
+---
+name: Describe CloudFormation Stack
+command: "aws cloudformation describe-stacks --stack-name {{stack_name}} --query \"Stacks[0].{Status:StackStatus,Outputs:Outputs}\" --output table --profile {{profile}}"
+description: Describe a CloudFormation stack showing its status and outputs
+arguments:
+  - name: stack_name
+    arg_type: Text
+    description: The CloudFormation stack name
+    default_value: ~
+  - name: profile
+    arg_type: Text
+    description: The AWS CLI profile to use
+    default_value: "default"
+tags:
+  - aws
+  - cloudformation
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

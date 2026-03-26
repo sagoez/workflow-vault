@@ -1,0 +1,25 @@
+---
+name: Exec Into a Docker Container
+command: "docker exec -it {{container_name}} {{shell}}"
+description: Open an interactive shell session inside a running Docker container
+arguments:
+  - name: container_name
+    arg_type: Enum
+    enum_name: running_containers
+    enum_command: "docker ps --format '{{.Names}}'"
+    description: The running container to exec into
+    default_value: ~
+  - name: shell
+    arg_type: Enum
+    enum_name: shells
+    enum_command: "echo '/bin/bash\n/bin/sh'"
+    description: Shell to use inside the container
+    default_value: /bin/sh
+tags:
+  - docker
+  - container
+  - debugging
+source_url: ~
+author: ~
+author_url: ~
+shells: []

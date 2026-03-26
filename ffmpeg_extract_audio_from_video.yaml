@@ -1,0 +1,27 @@
+---
+name: Extract Audio from Video
+command: "ffmpeg -i {{input_file}} -vn -acodec {{codec}} {{output_file}}"
+description: Extract the audio track from a video file
+arguments:
+  - name: input_file
+    arg_type: Text
+    description: Input video file path
+    default_value: ~
+  - name: codec
+    arg_type: Enum
+    enum_name: audio_codecs
+    enum_command: "echo 'copy\nlibmp3lame\naac\nflac'"
+    description: Audio codec to use (copy keeps original)
+    default_value: copy
+  - name: output_file
+    arg_type: Text
+    description: "Output audio file (e.g. audio.mp3, audio.aac)"
+    default_value: ~
+tags:
+  - ffmpeg
+  - audio
+  - video
+source_url: ~
+author: ~
+author_url: ~
+shells: []

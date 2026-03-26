@@ -1,0 +1,17 @@
+---
+name: Test Endpoint Response Time
+command: "curl -o /dev/null -s -w \"Connect: %{time_connect}s\\nTTFB: %{time_starttransfer}s\\nTotal: %{time_total}s\\nHTTP Code: %{http_code}\\n\" {{url}}"
+description: Measure connection time, time to first byte, and total response time for a URL
+arguments:
+  - name: url
+    arg_type: Text
+    description: URL to test
+    default_value: ~
+tags:
+  - curl
+  - networking
+  - performance
+source_url: ~
+author: ~
+author_url: ~
+shells: []

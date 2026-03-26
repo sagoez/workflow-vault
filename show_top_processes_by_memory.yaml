@@ -1,0 +1,19 @@
+---
+name: Show Top Processes by Memory Usage
+command: "ps aux --sort=-%mem | head -{{num_results}}"
+description: List processes sorted by memory consumption
+arguments:
+  - name: num_results
+    arg_type: Text
+    description: Number of top processes to show
+    default_value: "20"
+tags:
+  - system
+  - process
+  - memory
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

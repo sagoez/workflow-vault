@@ -1,0 +1,23 @@
+---
+name: SSH with a Specific Key
+command: "ssh -i ~/.ssh/{{key_name}} {{user}}@{{host}}"
+description: Connect via SSH using a specific private key file
+arguments:
+  - name: key_name
+    arg_type: Text
+    description: Name of the SSH private key file
+    default_value: id_ed25519
+  - name: user
+    arg_type: Text
+    description: SSH username
+    default_value: ~
+  - name: host
+    arg_type: Text
+    description: Remote host address
+    default_value: ~
+tags:
+  - ssh
+source_url: ~
+author: ~
+author_url: ~
+shells: []

@@ -1,0 +1,16 @@
+---
+name: Git Blame a File
+command: "git blame {{file_path}}"
+description: Show who last modified each line of a file and when
+arguments:
+  - name: file_path
+    arg_type: Text
+    description: Path to the file to blame
+    default_value: ~
+tags:
+  - git
+  - debugging
+source_url: ~
+author: ~
+author_url: ~
+shells: []

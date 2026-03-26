@@ -1,0 +1,24 @@
+---
+name: Scan Open Ports on a Host
+command: "nc -zv {{host}} {{start_port}}-{{end_port}} 2>&1 | grep succeeded"
+description: Scan a range of ports on a host to find open ones using netcat
+arguments:
+  - name: host
+    arg_type: Text
+    description: Host or IP address to scan
+    default_value: localhost
+  - name: start_port
+    arg_type: Text
+    description: Starting port number
+    default_value: "1"
+  - name: end_port
+    arg_type: Text
+    description: Ending port number
+    default_value: "1024"
+tags:
+  - networking
+  - security
+source_url: ~
+author: ~
+author_url: ~
+shells: []

@@ -1,0 +1,26 @@
+---
+name: Generate an SSH Key
+command: "ssh-keygen -t {{key_type}} -C \"{{comment}}\" -f ~/.ssh/{{key_name}}"
+description: Generate a new SSH key pair with a custom type, comment, and filename
+arguments:
+  - name: key_type
+    arg_type: Enum
+    enum_name: key_types
+    enum_command: "echo 'ed25519\nrsa'"
+    description: Type of SSH key to generate
+    default_value: ed25519
+  - name: comment
+    arg_type: Text
+    description: Comment for the key (usually your email)
+    default_value: ~
+  - name: key_name
+    arg_type: Text
+    description: Filename for the key (stored in ~/.ssh/)
+    default_value: id_ed25519
+tags:
+  - ssh
+  - security
+source_url: ~
+author: ~
+author_url: ~
+shells: []

@@ -1,0 +1,20 @@
+---
+name: Count Lines of Code
+command: "find {{directory}} -name \"{{file_pattern}}\" -exec cat {} + | wc -l"
+description: Count total lines of code across all files matching a pattern
+arguments:
+  - name: directory
+    arg_type: Text
+    description: Directory to search in
+    default_value: "."
+  - name: file_pattern
+    arg_type: Text
+    description: "File glob pattern (e.g. *.py, *.js, *.go)"
+    default_value: "*.py"
+tags:
+  - file
+  - development
+source_url: ~
+author: ~
+author_url: ~
+shells: []

@@ -1,0 +1,12 @@
+---
+name: Yarn Upgrade Interactive
+command: "yarn upgrade-interactive --latest"
+description: Interactively select which packages to upgrade to their latest versions
+arguments: []
+tags:
+  - yarn
+  - node
+source_url: ~
+author: ~
+author_url: ~
+shells: []

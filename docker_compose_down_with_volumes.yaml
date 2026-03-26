@@ -1,0 +1,13 @@
+---
+name: Docker Compose Down with Volumes
+command: "docker compose down -v"
+description: Stop and remove all Docker Compose containers, networks, and volumes
+arguments: []
+tags:
+  - docker
+  - docker-compose
+  - cleanup
+source_url: ~
+author: ~
+author_url: ~
+shells: []

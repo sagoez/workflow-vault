@@ -1,0 +1,29 @@
+---
+name: SSH Tunnel to a Remote Port
+command: "ssh -L {{local_port}}:localhost:{{remote_port}} {{user}}@{{host}}"
+description: Create a local SSH tunnel to forward a local port to a remote service
+arguments:
+  - name: local_port
+    arg_type: Text
+    description: Local port to listen on
+    default_value: "8080"
+  - name: remote_port
+    arg_type: Text
+    description: Remote port to forward to
+    default_value: "3306"
+  - name: user
+    arg_type: Text
+    description: SSH username
+    default_value: ~
+  - name: host
+    arg_type: Text
+    description: Remote host address
+    default_value: ~
+tags:
+  - ssh
+  - networking
+  - tunnel
+source_url: ~
+author: ~
+author_url: ~
+shells: []

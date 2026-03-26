@@ -1,0 +1,26 @@
+---
+name: Copy File from Docker Container
+command: "docker cp {{container_name}}:{{container_path}} {{host_path}}"
+description: Copy a file or directory from a Docker container to the host machine
+arguments:
+  - name: container_name
+    arg_type: Enum
+    enum_name: containers
+    enum_command: "docker ps -a --format '{{.Names}}'"
+    description: Container to copy from
+    default_value: ~
+  - name: container_path
+    arg_type: Text
+    description: Path inside the container
+    default_value: ~
+  - name: host_path
+    arg_type: Text
+    description: Destination path on host
+    default_value: "."
+tags:
+  - docker
+  - filesystem
+source_url: ~
+author: ~
+author_url: ~
+shells: []

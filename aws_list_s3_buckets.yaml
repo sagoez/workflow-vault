@@ -1,0 +1,18 @@
+---
+name: List S3 Buckets
+command: "aws s3 ls --profile {{profile}}"
+description: List all S3 buckets in the account
+arguments:
+  - name: profile
+    arg_type: Text
+    description: The AWS CLI profile to use
+    default_value: "default"
+tags:
+  - aws
+  - s3
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

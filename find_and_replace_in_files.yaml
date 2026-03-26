@@ -1,0 +1,30 @@
+---
+name: Find and Replace Text in Files
+command: "find {{directory}} -type f -name \"{{file_pattern}}\" -exec sed -i '' 's/{{search}}/{{replace}}/g' {} +"
+description: Recursively find and replace text in files matching a pattern (macOS sed)
+arguments:
+  - name: directory
+    arg_type: Text
+    description: Directory to search in
+    default_value: "."
+  - name: file_pattern
+    arg_type: Text
+    description: "File glob pattern (e.g. *.py, *.js)"
+    default_value: "*"
+  - name: search
+    arg_type: Text
+    description: Text to search for
+    default_value: ~
+  - name: replace
+    arg_type: Text
+    description: Replacement text
+    default_value: ~
+tags:
+  - file
+  - search-replace
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

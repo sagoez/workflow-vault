@@ -1,0 +1,28 @@
+---
+name: Run a Docker Container
+command: "docker run -d --name {{container_name}} -p {{host_port}}:{{container_port}} {{image_name}}"
+description: Run a Docker container in detached mode with port mapping
+arguments:
+  - name: container_name
+    arg_type: Text
+    description: Name for the container
+    default_value: ~
+  - name: host_port
+    arg_type: Text
+    description: Port on the host machine
+    default_value: "8080"
+  - name: container_port
+    arg_type: Text
+    description: Port inside the container
+    default_value: "80"
+  - name: image_name
+    arg_type: Text
+    description: Docker image to run
+    default_value: ~
+tags:
+  - docker
+  - container
+source_url: ~
+author: ~
+author_url: ~
+shells: []

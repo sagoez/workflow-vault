@@ -1,0 +1,20 @@
+---
+name: Download a File with cURL
+command: "curl -L -o {{output_file}} {{url}}"
+description: Download a file from a URL, following redirects
+arguments:
+  - name: url
+    arg_type: Text
+    description: URL of the file to download
+    default_value: ~
+  - name: output_file
+    arg_type: Text
+    description: Local filename to save as
+    default_value: ~
+tags:
+  - curl
+  - networking
+source_url: ~
+author: ~
+author_url: ~
+shells: []

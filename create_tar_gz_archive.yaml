@@ -1,0 +1,20 @@
+---
+name: Create a tar.gz Archive
+command: "tar -czf {{archive_name}}.tar.gz {{source_path}}"
+description: Compress a file or directory into a gzipped tar archive
+arguments:
+  - name: archive_name
+    arg_type: Text
+    description: Name for the archive (without .tar.gz extension)
+    default_value: ~
+  - name: source_path
+    arg_type: Text
+    description: File or directory to archive
+    default_value: ~
+tags:
+  - archive
+  - compression
+source_url: ~
+author: ~
+author_url: ~
+shells: []

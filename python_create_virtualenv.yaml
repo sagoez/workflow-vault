@@ -1,0 +1,16 @@
+---
+name: Create Python Virtual Environment
+command: "python3 -m venv {{venv_name}}"
+description: Create a new Python virtual environment
+arguments:
+  - name: venv_name
+    arg_type: Text
+    description: Name/path for the virtual environment
+    default_value: ".venv"
+tags:
+  - python
+  - virtualenv
+source_url: ~
+author: ~
+author_url: ~
+shells: []

@@ -1,0 +1,12 @@
+---
+name: List Outdated npm Packages
+command: "npm outdated"
+description: Show packages that have newer versions available
+arguments: []
+tags:
+  - npm
+  - node
+source_url: ~
+author: ~
+author_url: ~
+shells: []

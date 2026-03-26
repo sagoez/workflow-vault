@@ -1,0 +1,20 @@
+---
+name: Convert Video Format
+command: "ffmpeg -i {{input_file}} {{output_file}}"
+description: Convert a video file from one format to another (format inferred from extension)
+arguments:
+  - name: input_file
+    arg_type: Text
+    description: Input video file path
+    default_value: ~
+  - name: output_file
+    arg_type: Text
+    description: "Output file path (e.g. output.mp4, output.webm)"
+    default_value: ~
+tags:
+  - ffmpeg
+  - video
+source_url: ~
+author: ~
+author_url: ~
+shells: []

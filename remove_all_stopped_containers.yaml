@@ -1,0 +1,12 @@
+---
+name: Remove All Stopped Containers
+command: "docker container prune -f"
+description: Remove all stopped Docker containers to free up disk space
+arguments: []
+tags:
+  - docker
+  - cleanup
+source_url: ~
+author: ~
+author_url: ~
+shells: []

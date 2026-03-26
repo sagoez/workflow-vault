@@ -1,0 +1,30 @@
+---
+name: Download File from S3
+command: "aws s3 cp s3://{{bucket_name}}/{{key}} {{local_path}} --profile {{profile}}"
+description: Download a file from an S3 bucket to a local path
+arguments:
+  - name: bucket_name
+    arg_type: Text
+    description: The S3 bucket name
+    default_value: ~
+  - name: key
+    arg_type: Text
+    description: The S3 object key
+    default_value: ~
+  - name: local_path
+    arg_type: Text
+    description: The local destination path
+    default_value: ~
+  - name: profile
+    arg_type: Text
+    description: The AWS CLI profile to use
+    default_value: "default"
+tags:
+  - aws
+  - s3
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

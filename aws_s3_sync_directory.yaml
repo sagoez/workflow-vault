@@ -1,0 +1,30 @@
+---
+name: Sync Local Directory to S3
+command: "aws s3 sync {{local_path}} s3://{{bucket_name}}/{{prefix}} --profile {{profile}}"
+description: Sync a local directory to an S3 bucket with an optional prefix
+arguments:
+  - name: local_path
+    arg_type: Text
+    description: The local directory path to sync
+    default_value: ~
+  - name: bucket_name
+    arg_type: Text
+    description: The S3 bucket name
+    default_value: ~
+  - name: prefix
+    arg_type: Text
+    description: The S3 key prefix (folder path)
+    default_value: ~
+  - name: profile
+    arg_type: Text
+    description: The AWS CLI profile to use
+    default_value: "default"
+tags:
+  - aws
+  - s3
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

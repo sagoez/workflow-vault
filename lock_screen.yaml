@@ -1,0 +1,13 @@
+---
+name: Lock Screen from Terminal
+command: "pmset displaysleepnow"
+description: Lock the macOS screen immediately from the terminal
+arguments: []
+tags:
+  - macos
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

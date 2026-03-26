@@ -1,0 +1,22 @@
+---
+name: List ECS Services
+command: "aws ecs list-services --cluster {{cluster_name}} --output table --profile {{profile}}"
+description: List all ECS services in a cluster
+arguments:
+  - name: cluster_name
+    arg_type: Text
+    description: The ECS cluster name
+    default_value: ~
+  - name: profile
+    arg_type: Text
+    description: The AWS CLI profile to use
+    default_value: "default"
+tags:
+  - aws
+  - ecs
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

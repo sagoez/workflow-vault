@@ -1,0 +1,23 @@
+---
+name: Login to ECR
+command: "aws ecr get-login-password --region {{region}} | docker login --username AWS --password-stdin {{account_id}}.dkr.ecr.{{region}}.amazonaws.com"
+description: Authenticate Docker to an AWS ECR registry
+arguments:
+  - name: region
+    arg_type: Text
+    description: The AWS region
+    default_value: "us-east-1"
+  - name: account_id
+    arg_type: Text
+    description: The AWS account ID
+    default_value: ~
+tags:
+  - aws
+  - ecr
+  - docker
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

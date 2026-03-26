@@ -1,0 +1,16 @@
+---
+name: Git Stash with Message
+command: "git stash push -m \"{{message}}\""
+description: Stash current changes with a descriptive message for easy identification later
+arguments:
+  - name: message
+    arg_type: Text
+    description: Description of the stashed changes
+    default_value: ~
+tags:
+  - git
+  - stash
+source_url: ~
+author: ~
+author_url: ~
+shells: []

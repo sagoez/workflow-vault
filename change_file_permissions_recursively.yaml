@@ -1,0 +1,26 @@
+---
+name: Change File Permissions Recursively
+command: "find {{directory}} -type {{type}} -exec chmod {{permissions}} {} +"
+description: Change permissions for all files or directories recursively
+arguments:
+  - name: directory
+    arg_type: Text
+    description: Directory to apply permissions in
+    default_value: "."
+  - name: type
+    arg_type: Enum
+    enum_name: file_types
+    enum_command: "echo 'f\nd'"
+    description: "Type to change: f for files, d for directories"
+    default_value: f
+  - name: permissions
+    arg_type: Text
+    description: "Permission mode (e.g. 644, 755, +x)"
+    default_value: "644"
+tags:
+  - file
+  - permissions
+source_url: ~
+author: ~
+author_url: ~
+shells: []

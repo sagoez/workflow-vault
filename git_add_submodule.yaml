@@ -1,0 +1,20 @@
+---
+name: Add a Git Submodule
+command: "git submodule add {{repository_url}} {{path}}"
+description: Add another Git repository as a submodule in the current repo
+arguments:
+  - name: repository_url
+    arg_type: Text
+    description: URL of the repository to add as a submodule
+    default_value: ~
+  - name: path
+    arg_type: Text
+    description: Path where the submodule should be placed
+    default_value: ~
+tags:
+  - git
+  - submodule
+source_url: ~
+author: ~
+author_url: ~
+shells: []

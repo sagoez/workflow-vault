@@ -1,0 +1,16 @@
+---
+name: Run a Python HTTP Server
+command: "python3 -m http.server {{port}}"
+description: Start a simple HTTP server serving the current directory
+arguments:
+  - name: port
+    arg_type: Text
+    description: Port to serve on
+    default_value: "8000"
+tags:
+  - python
+  - networking
+source_url: ~
+author: ~
+author_url: ~
+shells: []

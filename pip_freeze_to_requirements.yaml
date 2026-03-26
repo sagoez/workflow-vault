@@ -1,0 +1,16 @@
+---
+name: Freeze Python Dependencies to Requirements
+command: "pip freeze > {{output_file}}"
+description: Export all installed Python packages and versions to a requirements file
+arguments:
+  - name: output_file
+    arg_type: Text
+    description: Output file path
+    default_value: "requirements.txt"
+tags:
+  - python
+  - pip
+source_url: ~
+author: ~
+author_url: ~
+shells: []

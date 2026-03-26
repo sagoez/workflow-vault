@@ -1,0 +1,15 @@
+---
+name: Flush DNS Cache
+command: "sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
+description: Clear the local DNS cache on macOS to resolve stale DNS entries
+arguments: []
+tags:
+  - macos
+  - networking
+  - dns
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

@@ -1,0 +1,12 @@
+---
+name: List Docker Containers with Resource Stats
+command: "docker stats --no-stream"
+description: Show CPU, memory, and network usage for all running containers
+arguments: []
+tags:
+  - docker
+  - monitoring
+source_url: ~
+author: ~
+author_url: ~
+shells: []

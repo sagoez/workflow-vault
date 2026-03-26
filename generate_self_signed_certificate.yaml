@@ -1,0 +1,28 @@
+---
+name: Generate Self-Signed SSL Certificate
+command: "openssl req -x509 -newkey rsa:4096 -keyout {{key_file}} -out {{cert_file}} -days {{days}} -nodes -subj \"/CN={{domain}}\""
+description: Generate a self-signed SSL certificate for local development
+arguments:
+  - name: domain
+    arg_type: Text
+    description: Common Name for the certificate
+    default_value: localhost
+  - name: key_file
+    arg_type: Text
+    description: Output private key file
+    default_value: "key.pem"
+  - name: cert_file
+    arg_type: Text
+    description: Output certificate file
+    default_value: "cert.pem"
+  - name: days
+    arg_type: Text
+    description: Certificate validity in days
+    default_value: "365"
+tags:
+  - ssl
+  - security
+source_url: ~
+author: ~
+author_url: ~
+shells: []

@@ -1,0 +1,26 @@
+---
+name: Invoke Lambda Function
+command: "aws lambda invoke --function-name {{function_name}} --payload '{{payload}}' /dev/stdout --profile {{profile}}"
+description: Invoke an AWS Lambda function with a JSON payload
+arguments:
+  - name: function_name
+    arg_type: Text
+    description: The Lambda function name or ARN
+    default_value: ~
+  - name: payload
+    arg_type: Text
+    description: The JSON payload to send to the function
+    default_value: "{}"
+  - name: profile
+    arg_type: Text
+    description: The AWS CLI profile to use
+    default_value: "default"
+tags:
+  - aws
+  - lambda
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

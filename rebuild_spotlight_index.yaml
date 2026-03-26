@@ -1,0 +1,14 @@
+---
+name: Rebuild Spotlight Index
+command: "sudo mdutil -E /"
+description: Force macOS to rebuild the entire Spotlight search index
+arguments: []
+tags:
+  - macos
+  - spotlight
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh

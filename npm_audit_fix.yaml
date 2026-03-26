@@ -1,0 +1,13 @@
+---
+name: npm Audit and Fix Vulnerabilities
+command: "npm audit fix"
+description: Scan for security vulnerabilities and automatically install compatible updates
+arguments: []
+tags:
+  - npm
+  - node
+  - security
+source_url: ~
+author: ~
+author_url: ~
+shells: []

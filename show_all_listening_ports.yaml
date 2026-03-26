@@ -1,0 +1,14 @@
+---
+name: Show All Listening Ports
+command: "lsof -i -P -n | grep LISTEN"
+description: List all processes currently listening on network ports
+arguments: []
+tags:
+  - networking
+  - debugging
+source_url: ~
+author: ~
+author_url: ~
+shells:
+  - Bash
+  - Zsh
