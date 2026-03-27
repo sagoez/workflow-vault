@@ -37,6 +37,15 @@ const html = `<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Workflow Vault</title>
+<meta property="og:title" content="Workflow Vault">
+<meta property="og:description" content="90+ community workflows for wf-cli. Browse, search, and sync.">
+<meta property="og:image" content="https://wf.sagoez.com/og.png">
+<meta property="og:url" content="https://vault.sagoez.com">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Workflow Vault">
+<meta name="twitter:description" content="90+ community workflows for wf-cli. Browse, search, and sync.">
+<meta name="twitter:image" content="https://wf.sagoez.com/og.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,${faviconSvg}">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
