@@ -125,10 +125,11 @@ const html = `<!DOCTYPE html>
     --command-text: #16a34a;
   }
 
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap');
 
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
@@ -462,7 +463,7 @@ const html = `<!DOCTYPE html>
   }
 
   .arg-label {
-    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-family: 'Geist Mono', 'SF Mono', 'Fira Code', monospace;
     font-size: 12px;
     color: var(--orange);
     text-align: right;
@@ -478,7 +479,7 @@ const html = `<!DOCTYPE html>
     border: 1px solid var(--border);
     border-radius: 5px;
     color: var(--text);
-    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-family: 'Geist Mono', 'SF Mono', 'Fira Code', monospace;
     font-size: 13px;
     outline: none;
     transition: border-color 0.15s;
@@ -521,7 +522,7 @@ const html = `<!DOCTYPE html>
     border-radius: 6px;
     padding: 14px 16px;
     padding-right: 70px;
-    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-family: 'Geist Mono', 'SF Mono', 'Fira Code', monospace;
     font-size: 13px;
     line-height: 1.6;
     overflow-x: auto;
